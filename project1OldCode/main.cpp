@@ -40,5 +40,26 @@ int main() {
         }
         i=0;
     }
+
+
+     while (getline(file, line)) {
+
+        stringstream tr(line);
+
+        while(getline(tr, str, ',')) { 
+            if (i==1) {
+                row[rowNum].setZipCode(str);
+            } else if (i == 3) {
+                row[rowNum].setStateID(str);
+            } else if (i == 5) {
+                row[rowNum].setLatitude(str);
+            } else if (i == 6) {
+                row[rowNum].setLongitude(str);
+                rowNum = rowNum + 1;
+            }
+            i++;
+        }
+        i=0;
+    }
     ordering(row); //Runs the "ordering" function from bufferClass
 }

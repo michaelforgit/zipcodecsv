@@ -1,18 +1,30 @@
 {
     "files.associations": {
+<<<<<<< HEAD
         "iosfwd": "cpp",
         "istream": "cpp",
         "atomic": "cpp",
         "bit": "cpp",
+=======
+        "array": "cpp",
+        "atomic": "cpp",
+        "bit": "cpp",
+        "*.tcc": "cpp",
+>>>>>>> b90078f32849bd11919b2e6af589268e84dd5d20
         "cctype": "cpp",
         "clocale": "cpp",
         "cmath": "cpp",
         "compare": "cpp",
         "concepts": "cpp",
+<<<<<<< HEAD
+=======
+        "cstdarg": "cpp",
+>>>>>>> b90078f32849bd11919b2e6af589268e84dd5d20
         "cstddef": "cpp",
         "cstdint": "cpp",
         "cstdio": "cpp",
         "cstdlib": "cpp",
+<<<<<<< HEAD
         "cstring": "cpp",
         "ctime": "cpp",
         "cwchar": "cpp",
@@ -26,10 +38,40 @@
         "limits": "cpp",
         "memory": "cpp",
         "new": "cpp",
+=======
+        "cwchar": "cpp",
+        "cwctype": "cpp",
+        "deque": "cpp",
+        "string": "cpp",
+        "unordered_map": "cpp",
+        "vector": "cpp",
+        "exception": "cpp",
+        "algorithm": "cpp",
+        "functional": "cpp",
+        "iterator": "cpp",
+        "memory": "cpp",
+        "memory_resource": "cpp",
+        "numeric": "cpp",
+        "random": "cpp",
+        "string_view": "cpp",
+        "system_error": "cpp",
+        "tuple": "cpp",
+        "type_traits": "cpp",
+        "utility": "cpp",
+        "fstream": "cpp",
+        "initializer_list": "cpp",
+        "iosfwd": "cpp",
+        "iostream": "cpp",
+        "istream": "cpp",
+        "limits": "cpp",
+        "new": "cpp",
+        "numbers": "cpp",
+>>>>>>> b90078f32849bd11919b2e6af589268e84dd5d20
         "ostream": "cpp",
         "sstream": "cpp",
         "stdexcept": "cpp",
         "streambuf": "cpp",
+<<<<<<< HEAD
         "string": "cpp",
         "system_error": "cpp",
         "tuple": "cpp",
@@ -51,4 +93,8 @@
         "xutility": "cpp"
     },
     "git.ignoreLimitWarning": true
+=======
+        "typeinfo": "cpp"
+    }
+>>>>>>> b90078f32849bd11919b2e6af589268e84dd5d20
 }

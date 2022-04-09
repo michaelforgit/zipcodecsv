@@ -6,7 +6,6 @@
 #include <iomanip> 
 #include <cstring>
 
-
 using namespace std;
 char ch;
 
@@ -21,15 +20,18 @@ int findNextZipCode(int *lengthInd, int *current, string contents, char* char_ar
             }
         } 
         else { 
-            return false;
+            return false; 
         }
     }
     return false;
 }
-
+//us_postal_codes.csv
+//us_postal_codes.txt
+//us_postal_codes_ROWS_RANDOMIZED.csv
+//row_random.txt
 int main() {
     ifstream infile;
-    infile.open("us_postal_codes.csv");
+    infile.open("us_postal_codes.txt");
     string contents;
     
     contents.assign(istreambuf_iterator<char>(infile), istreambuf_iterator<char>());
@@ -41,12 +43,13 @@ int main() {
     cin >> s;
     s = s.substr(2, s.length());
     
-    
+
     int n = s.length();
     char char_array[n + 1];
     strcpy(char_array, s.c_str()); 
     bool flag = false;
     while(flag == false) {
+
         flag = findNextZipCode(&lengthInd, &current, contents, char_array, s);
         if (flag==true) {
             cout << "TRUE";
