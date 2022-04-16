@@ -104,14 +104,13 @@ int main() {
 vector<BufferClass> zipObjects;
 //packing
     for (int i = 0; i < validZips.size(); i++) {
-        char char_array[arrZipsFromFile[i].length() + 1];
-        strcpy(char_array, arrZipsFromFile[i].c_str()); 
+        char char_array[validZips[i].second.length() + 1];
+        strcpy(char_array, validZips[i].second.c_str()); 
         for (int j = 0; j < validZips[i].first; j++) {
-            findNextZipCode(&lengthInd, &current, contents, char_array, arrZipsFromFile[i]);
+            findNextZipCode(&lengthInd, &current, contents, char_array, validZips[i].second);
         }
         string record;
         record = contents.substr(current+3, lengthInd-3);
-        cout << record;
         BufferClass zipObject;
         zipObject.pack(record);
         zipObjects.push_back(zipObject);
