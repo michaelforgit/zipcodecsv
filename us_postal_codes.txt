@@ -1,4 +1,4 @@
-44,"Zip Code","Place Name",State,County,Lat,Long
+44,"ZipCode","PlaceName",State,County,Lat,Long
 43,501,Holtsville,NY,Suffolk,40.8154,-73.0451
 43,544,Holtsville,NY,Suffolk,40.8154,-73.0451
 40,1001,Agawam,MA,Hampden,42.0702,-72.6227

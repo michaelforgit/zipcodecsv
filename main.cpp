@@ -1,19 +1,21 @@
 #include <iostream>
 #include <string>
+#include <sstream>
 #include <fstream>
 #include <vector>
-#include <sstream>
 #include <iomanip> 
 #include <cstring>
+#include <utility>
+#include <unordered_map>
+#include "bufferClass.cpp"
 
 using namespace std;
 char ch;
 
-//length indicator +3 to include itself and the comma.
+
 int findNextZipCode(int *lengthInd, int *current, string contents, char* char_array, string s) {
     *current = *current + *lengthInd;
     *lengthInd = (contents[*current]-'0')*10 + contents[*current+1] - '0' + 3; //Adds 3 to skip itself and comma
-    
     for (int i = 0; i < 5; i++) {
         if (contents[*current+3+i] == char_array[i]) {
             if ((i==s.length()-1) && (contents[*current+3+i+1]==',')) {
@@ -26,66 +28,101 @@ int findNextZipCode(int *lengthInd, int *current, string contents, char* char_ar
     }
     return false;
 }
+
+int main() {
+
+
+
+//length indicator +3 to include itself and the comma.
+
 //us_postal_codes.csv
 //us_postal_codes.txt
 //us_postal_codes_ROWS_RANDOMIZED.csv
 //row_random.txt
-int main() {
+
     ifstream infile;
     infile.open("us_postal_codes.txt");
     string contents;
     
     contents.assign(istreambuf_iterator<char>(infile), istreambuf_iterator<char>());
     int current = 0;
-    int lengthInd = (contents[0]-'0')*10 + contents[1]-'0' + 3; //Next indicator add 3 to skip itself and comma
+    int lengthInd = 0;
     string s;
-    cout << "Enter ZipCode: ";
-    cin >> s;
-    //s = s.substr(2, s.length());
-    
 
     int n = s.length();
-    char char_array[n + 1];
-    strcpy(char_array, s.c_str()); 
     bool flag = false;
-    //int test = (contents[0]-'0')*10+ contents[current+1] - '0' + 3;
-    //findNextZipCode(&lengthInd, &current, contents, char_array, s);
-    while(flag == false) {
-        flag = findNextZipCode(&lengthInd, &current, contents, char_array, s);
-    }
-    if (flag==true) {
-        int field = 0;
-        cout << "ZIPCODE: ";
-        for (int i = current+3; i < current+lengthInd; i++) {
-            //remove +3 to include lenghtInd and write everything here to lenghtIndFile
-            if (contents[i] == ',') {
-                field++;
-                switch (field)
-                {
-                case 1:
-                    cout << " PLACENAME: ";
-                    break;
-                case 2:
-                    cout << " STATE: ";
-                    break;
-                case 3:
-                    cout << " COUNTY: ";
-                    break;
-                case 4:
-                    cout << " LAT: ";
-                    break;
-                case 5:
-                    cout <<" LONG: ";
-                    break;
-                default:
-                    break;
-                }
-                continue;
-            }
-            cout << contents[i];
+
+    string codes;
+    cout << "Zipcodes: ";
+    getline(cin,codes);
+
+    istringstream iss(codes);
+    string oneZip;
+
+    vector<string> arrZips;
+    vector<pair<int, string>> validZips;
+    
+    int line = 0;
+    
+    while(iss >> oneZip){
+        if (oneZip.substr(0,2).compare("-Z") == 0) {
+            arrZips.push_back(oneZip.substr(2));
+        } else {
+            cout << "Not a valid input. Try capitalizing the -Z";
+            return 0;
         }
     }
-    if (flag==false) {
-        cout << "FALSE";
+
+//finding valid zips and making a vector
+    for (int i = 0; i < arrZips.size(); i++) {
+        char char_array[arrZips[i].length() + 1];
+        strcpy(char_array, arrZips[i].c_str()); 
+        while (flag == false) {
+            flag = findNextZipCode(&lengthInd, &current, contents, char_array, arrZips[i]);
+            line = line + 1;
+
+        }
+        if (flag==false) {
+            cout << "FALSE";
+        }
+        if (flag==true) {
+            validZips.push_back(make_pair(line, arrZips[i]));
+            flag=false;
+        }
+        line = 0;
+        lengthInd = 0;
+        current = 0;
+    }
+    
+//making primary key index file
+    ofstream pkindex("primary_key_index.txt");
+    for (auto const& x : validZips){
+        pkindex << x.first << "," << x.second;
+        pkindex << "\n";
+    }
+
+vector<BufferClass> zipObjects;
+//packing
+    for (int i = 0; i < validZips.size(); i++) {
+        char char_array[arrZipsFromFile[i].length() + 1];
+        strcpy(char_array, arrZipsFromFile[i].c_str()); 
+        for (int j = 0; j < validZips[i].first; j++) {
+            findNextZipCode(&lengthInd, &current, contents, char_array, arrZipsFromFile[i]);
+        }
+        string record;
+        record = contents.substr(current+3, lengthInd-3);
+        cout << record;
+        BufferClass zipObject;
+        zipObject.pack(record);
+        zipObjects.push_back(zipObject);
+        lengthInd = 0;
+        current = 0;
+    }
+
+    for (int i = 0; i < zipObjects.size(); i++) {
+        zipObjects[i].unpack();
     }
 }
+
+
+
