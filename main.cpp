@@ -41,7 +41,7 @@ int main() {
 //row_random.txt
 
     ifstream infile;
-    infile.open("us_postal_codes.txt");
+    infile.open("smaller_us_postal_codes.txt");
     string contents;
     
     contents.assign(istreambuf_iterator<char>(infile), istreambuf_iterator<char>());
@@ -77,13 +77,13 @@ int main() {
     for (int i = 0; i < arrZips.size(); i++) {
         char char_array[arrZips[i].length() + 1];
         strcpy(char_array, arrZips[i].c_str()); 
-        while (flag == false) {
+        while (flag == false && contents[current+lengthInd]!=NULL) {
             flag = findNextZipCode(&lengthInd, &current, contents, char_array, arrZips[i]);
             line = line + 1;
 
         }
         if (flag==false) {
-            cout << "FALSE";
+            cout << arrZips[i] << " is not a valid zip code.\n";
         }
         if (flag==true) {
             validZips.push_back(make_pair(line, arrZips[i]));
